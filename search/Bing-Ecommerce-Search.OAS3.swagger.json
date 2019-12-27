@@ -1,0 +1,1833 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Bing ECommerce Search",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://www.bingapis.com/api/v1/retail/search"
+    }
+  ],
+  "paths": {
+    "/{tenant}/indexes/{index}": {
+      "post": {
+        "tags": [
+          "RetailSearchService"
+        ],
+        "operationId": "Search_Post",
+        "requestBody": {
+          "required" : true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECommerceSearchPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerceSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "RetailSearchService"
+        ],
+        "operationId": "Search_Get",
+        "parameters": [
+          {
+            "name": "mkt",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "setlang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderby",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "discoverfacets",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "alteration",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "debug",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "searchinstanceid",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Default"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ECommerceSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenant",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "index",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "ECommerceSearchPostRequest": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string"
+          },
+          "client": {
+            "$ref": "#/components/schemas/Request.Client"
+          },
+          "language": {
+            "type": "string"
+          },
+          "query": {
+            "$ref": "#/components/schemas/Request.Query"
+          },
+          "items": {
+            "$ref": "#/components/schemas/Request.Items"
+          },
+          "aggregations": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request.AggregationBase"
+            }
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          },
+          "searchInstanceId": {
+            "type": "string",
+            "default": "Default"
+          }
+        }
+      },
+      "Request.Client": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request.ClientId"
+            }
+          }
+        }
+      },
+      "Request.ClientId": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "MUID",
+              "UID"
+            ],
+            "type": "string",
+            "default": "MUID"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "Request.Query": {
+        "type": "object",
+        "properties": {
+          "matchAll": {
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Request.QueryClauseBase"
+          },
+          "filter": {
+            "$ref": "#/components/schemas/ConditionBase"
+          },
+          "boosts": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request.BoostExpression"
+            }
+          },
+          "alteration": {
+            "type": "boolean",
+            "default": true
+          },
+          "synonyms": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Synonym"
+            }
+          },
+          "excludeBusinessRules": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Request.QueryClauseBase": {
+        "required": [
+          "_type"
+        ],
+        "type": "object",
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Match": "Request.Match",
+            "MatchStreams": "Request.Bing.MatchStreams",
+            "QueryClauseBlock": "Request.QueryClauseBlock",
+            "LocationMatch": "Request.LocationMatch"
+          }
+        }
+      },
+      "Request.Match": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.QueryClauseBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Match": "Request.Match",
+            "MatchStreams": "Request.Bing.MatchStreams"
+          }
+        },
+        "x-ms-discriminator-value": "Match"
+      },
+      "Request.Bing.MatchStreams": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.Match"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "include": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "exclude": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "MatchStreams"
+      },
+      "Request.QueryClauseBlock": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.QueryClauseBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "values": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Request.QueryClauseBase"
+                }
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "QueryClauseBlock"
+      },
+      "Request.LocationMatch": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.QueryClauseBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "center": {
+                "$ref": "#/components/schemas/GeoPoint"
+              },
+              "radius": {
+                "type": "number",
+                "format": "float"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "LocationMatch"
+      },
+      "GeoPoint": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "format": "float"
+          },
+          "lon": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "ConditionBase": {
+        "required": [
+          "_type"
+        ],
+        "type": "object",
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "ConditionBlock": "ConditionBlock",
+            "StringCondition": "StringCondition",
+            "BoolCondition": "BoolCondition",
+            "NumericCondition": "NumericCondition",
+            "CategoryCondition": "CategoryCondition",
+            "StringSetCondition": "StringSetCondition",
+            "GeoCondition": "GeoCondition"
+          }
+        }
+      },
+      "ConditionBlock": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "conditions": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ConditionBase"
+                }
+              },
+              "operator": {
+                "$ref": "#/components/schemas/LogicalOperator"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "ConditionBlock"
+      },
+      "FieldConditionBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "StringCondition": "StringCondition",
+            "BoolCondition": "BoolCondition",
+            "NumericCondition": "NumericCondition",
+            "CategoryCondition": "CategoryCondition",
+            "StringSetCondition": "StringSetCondition"
+          }
+        }
+      },
+      "EquivalenceConditionBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "operator": {
+                "$ref": "#/components/schemas/EquivalenceOperator"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "StringCondition": "StringCondition",
+            "BoolCondition": "BoolCondition"
+          }
+        }
+      },
+      "StringCondition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EquivalenceConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "StringCondition"
+      },
+      "BoolCondition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EquivalenceConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "BoolCondition"
+      },
+      "NumericCondition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "format": "double"
+              },
+              "operator": {
+                "$ref": "#/components/schemas/ComparisonOperator"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "NumericCondition"
+      },
+      "CategoryCondition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "operator": {
+                "$ref": "#/components/schemas/CategoryOperator"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "CategoryCondition"
+      },
+      "SetConditionBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "operator": {
+                "$ref": "#/components/schemas/SetOperator"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "StringSetCondition": "StringSetCondition"
+          }
+        }
+      },
+      "StringSetCondition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SetConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "values": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "StringSetCondition"
+      },
+      "GeoCondition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConditionBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "boundary": {
+                "$ref": "#/components/schemas/GeoBoundaryBase"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "GeoCondition"
+      },
+      "GeoBoundaryBase": {
+        "required": [
+          "_type"
+        ],
+        "type": "object",
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "GeoBoundingBox": "GeoBoundingBox",
+            "GeoDistance": "GeoDistance"
+          }
+        }
+      },
+      "GeoBoundingBox": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GeoBoundaryBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "topLeft": {
+                "$ref": "#/components/schemas/GeoPoint"
+              },
+              "bottomRight": {
+                "$ref": "#/components/schemas/GeoPoint"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "GeoBoundingBox"
+      },
+      "GeoDistance": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GeoBoundaryBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "center": {
+                "$ref": "#/components/schemas/GeoPoint"
+              },
+              "radius": {
+                "type": "number",
+                "format": "float"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "GeoDistance"
+      },
+      "Request.BoostExpression": {
+        "type": "object",
+        "properties": {
+          "condition": {
+            "$ref": "#/components/schemas/ConditionBase"
+          },
+          "boost": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Synonym": {
+        "type": "object",
+        "properties": {
+          "synonymId": {
+            "type": "string"
+          },
+          "synonyms": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Request.Items": {
+        "type": "object",
+        "properties": {
+          "select": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "orderBy": {
+            "type": "string"
+          },
+          "top": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dedupe": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "Request.AggregationBase": {
+        "required": [
+          "_type"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "aggregations": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request.AggregationBase"
+            }
+          },
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Filter": "Request.Filter",
+            "Facet": "Request.Facet",
+            "RangeFacet": "Request.RangeFacet",
+            "Min": "Request.Min",
+            "Max": "Request.Max",
+            "DiscoverFacets": "Request.DiscoverFacets"
+          }
+        }
+      },
+      "Request.Filter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.AggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "$ref": "#/components/schemas/ConditionBase"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "Filter"
+      },
+      "Request.FieldAggregationBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.AggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Facet": "Request.Facet",
+            "RangeFacet": "Request.RangeFacet",
+            "Min": "Request.Min",
+            "Max": "Request.Max"
+          }
+        }
+      },
+      "Request.FacetBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.FieldAggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "orderBy": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Facet": "Request.Facet",
+            "RangeFacet": "Request.RangeFacet"
+          }
+        }
+      },
+      "Request.Facet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.FacetBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "x-ms-discriminator-value": "Facet"
+      },
+      "Request.RangeFacet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.FacetBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "interval": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "RangeFacet"
+      },
+      "Request.Min": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.FieldAggregationBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "x-ms-discriminator-value": "Min"
+      },
+      "Request.Max": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.FieldAggregationBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "x-ms-discriminator-value": "Max"
+      },
+      "Request.DiscoverFacets": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Request.AggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "discoverFilter": {
+                "type": "boolean",
+                "default": false
+              },
+              "refinements": {
+                "type": "boolean",
+                "default": true
+              },
+              "pin": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Request.FacetBase"
+                }
+              },
+              "include": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Request.FacetBase"
+                }
+              },
+              "exclude": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "facetDefaults": {
+                "$ref": "#/components/schemas/Request.Facet"
+              },
+              "rangeFacetDefaults": {
+                "$ref": "#/components/schemas/Request.RangeFacet"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "DiscoverFacets"
+      },
+      "ECommerceSearchResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Task"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "impressionId": {
+                "type": "string"
+              },
+              "queryContext": {
+                "$ref": "#/components/schemas/Response.QueryContext"
+              },
+              "items": {
+                "$ref": "#/components/schemas/Response.ItemsBase"
+              },
+              "aggregations": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.Aggregation"
+                }
+              },
+              "redirectUrl": {
+                "type": "string"
+              },
+              "customization": {
+                "$ref": "#/components/schemas/Response.Customization"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "SearchResponse"
+      },
+      "Response.QueryContext": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Task"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "originalQuery": {
+                "type": "string"
+              },
+              "alteredQuery": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Response.Task": {
+        "required": [
+          "_type"
+        ],
+        "type": "object",
+        "properties": {
+          "errors": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.Error"
+            }
+          },
+          "debug": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.DebugInfo"
+            }
+          },
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Items": "Response.Items",
+            "Aggregation": "Response.Aggregation",
+            "Filter": "Response.Filter",
+            "DiscoveredFacets": "Response.DiscoveredFacets",
+            "RangeRefinement": "Response.RangeRefinement",
+            "NumberRefinement": "Response.NumberRefinement",
+            "StringRefinement": "Response.StringRefinement",
+            "CategoryRefinement": "Response.CategoryRefinement",
+            "BoolRefinement": "Response.BoolRefinement",
+            "NumberFacet": "Response.NumberFacet",
+            "StringFacet": "Response.StringFacet",
+            "CategoryFacet": "Response.CategoryFacet",
+            "BoolFacet": "Response.BoolFacet",
+            "RangeFacet": "Response.RangeFacet",
+            "Min": "Response.Min",
+            "Max": "Response.Max",
+            "SearchResponse": "ECommerceSearchResponse"
+          }
+        }
+      },
+      "Response.Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "enum": [
+              "None",
+              "ServerError",
+              "InvalidRequest",
+              "InsufficientAuthorization"
+            ],
+            "type": "string",
+            "default": "None"
+          },
+          "subCode": {
+            "enum": [
+              "UnexpectedError",
+              "ResourceError",
+              "DeadlineExceeded",
+              "ParameterMissing",
+              "ParameterInvalidValue"
+            ],
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "moreDetails": {
+            "type": "string"
+          }
+        }
+      },
+      "Response.DebugInfo": {
+        "required": [
+          "_type"
+        ],
+        "type": "object",
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "BingItemDebugInfo": "Response.Bing.BingItemDebugInfo"
+          }
+        }
+      },
+      "Response.Bing.BingItemDebugInfo": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.DebugInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "perfectMatchingStreams": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.Bing.MatchingStream"
+                }
+              },
+              "completeMatchingStreams": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.Bing.MatchingStream"
+                }
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "BingItemDebugInfo"
+      },
+      "Response.Bing.MatchingStream": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SetOperator": {
+        "enum": [
+          "In",
+          "NotIn"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "SetOperator",
+          "values": [
+            {
+              "value": "In"
+            },
+            {
+              "value": "NotIn"
+            }
+          ]
+        }
+      },
+      "Response.Customization": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Task"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "queryAlteration": {
+                "type": "boolean"
+              },
+              "synonyms": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Synonym"
+                }
+              },
+              "rules": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "filter": {
+                "$ref": "#/components/schemas/ConditionBase"
+              },
+              "boosts": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.BoostExpression"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Response.BoostExpression": {
+        "type": "object",
+        "properties": {
+          "condition": {
+            "$ref": "#/components/schemas/ConditionBase"
+          },
+          "boost": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Response.ItemsBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Task"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalEstimatedMatches": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Items": "Response.Items"
+          }
+        }
+      },
+      "Response.Items": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.ItemsBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.Item"
+                }
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "Items"
+      },
+      "Response.Item": {
+        "type": "object",
+        "properties": {
+          "indexId": {
+            "type": "string"
+          },
+          "itemId": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          },
+          "fields": {
+            "type": "object"
+          },
+          "debug": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.DebugInfo"
+            }
+          }
+        }
+      },
+      "ComparisonOperator": {
+        "enum": [
+          "Eq",
+          "Ne",
+          "Gt",
+          "Lt",
+          "Ge",
+          "Le"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ComparisonOperator",
+          "values": [
+            {
+              "value": "Eq"
+            },
+            {
+              "value": "Ne"
+            },
+            {
+              "value": "Gt"
+            },
+            {
+              "value": "Lt"
+            },
+            {
+              "value": "Ge"
+            },
+            {
+              "value": "Le"
+            }
+          ]
+        }
+      },
+      "CategoryOperator": {
+        "enum": [
+          "In",
+          "NotIn"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "CategoryOperator",
+          "values": [
+            {
+              "value": "In"
+            },
+            {
+              "value": "NotIn"
+            }
+          ]
+        }
+      },
+      "EquivalenceOperator": {
+        "enum": [
+          "Eq",
+          "Ne"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "EquivalenceOperator",
+          "values": [
+            {
+              "value": "Eq"
+            },
+            {
+              "value": "Ne"
+            }
+          ]
+        }
+      },
+      "LogicalOperator": {
+        "enum": [
+          "And",
+          "Or"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "LogicalOperator",
+          "values": [
+            {
+              "value": "And"
+            },
+            {
+              "value": "Or"
+            }
+          ]
+        }
+      },
+      "Response.Aggregation": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Task"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "estimatedCount": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "aggregations": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.Aggregation"
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "Aggregation": "Response.Aggregation",
+            "Filter": "Response.Filter",
+            "DiscoveredFacets": "Response.DiscoveredFacets",
+            "RangeRefinement": "Response.RangeRefinement",
+            "NumberRefinement": "Response.NumberRefinement",
+            "StringRefinement": "Response.StringRefinement",
+            "CategoryRefinement": "Response.CategoryRefinement",
+            "BoolRefinement": "Response.BoolRefinement",
+            "NumberFacet": "Response.NumberFacet",
+            "StringFacet": "Response.StringFacet",
+            "CategoryFacet": "Response.CategoryFacet",
+            "BoolFacet": "Response.BoolFacet",
+            "RangeFacet": "Response.RangeFacet",
+            "Min": "Response.Min",
+            "Max": "Response.Max"
+          }
+        },
+        "x-ms-discriminator-value": "Aggregation"
+      },
+      "Response.Filter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Aggregation"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "x-ms-discriminator-value": "Filter"
+      },
+      "Response.DiscoveredFacets": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Aggregation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "$ref": "#/components/schemas/ConditionBase"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "DiscoveredFacets"
+      },
+      "Response.RefinementBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Aggregation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "RangeRefinement": "Response.RangeRefinement",
+            "NumberRefinement": "Response.NumberRefinement",
+            "StringRefinement": "Response.StringRefinement",
+            "CategoryRefinement": "Response.CategoryRefinement",
+            "BoolRefinement": "Response.BoolRefinement"
+          }
+        }
+      },
+      "Response.RangeRefinement": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.RefinementBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ge": {
+                "type": "number",
+                "format": "double"
+              },
+              "lt": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "RangeRefinement"
+      },
+      "Response.NumberRefinement": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.RefinementBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "NumberRefinement"
+      },
+      "Response.StringRefinement": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.RefinementBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "StringRefinement": "Response.StringRefinement",
+            "CategoryRefinement": "Response.CategoryRefinement"
+          }
+        },
+        "x-ms-discriminator-value": "StringRefinement"
+      },
+      "Response.CategoryRefinement": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.StringRefinement"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "refinements": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response.CategoryRefinement"
+                }
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "CategoryRefinement"
+      },
+      "Response.BoolRefinement": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.RefinementBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "BoolRefinement"
+      },
+      "Response.FieldAggregationBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.Aggregation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "NumberFacet": "Response.NumberFacet",
+            "StringFacet": "Response.StringFacet",
+            "CategoryFacet": "Response.CategoryFacet",
+            "BoolFacet": "Response.BoolFacet",
+            "RangeFacet": "Response.RangeFacet",
+            "Min": "Response.Min",
+            "Max": "Response.Max"
+          }
+        }
+      },
+      "Response.FacetBase": {
+        "required": [
+          "_type"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FieldAggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "_type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "_type",
+          "mapping": {
+            "NumberFacet": "Response.NumberFacet",
+            "StringFacet": "Response.StringFacet",
+            "CategoryFacet": "Response.CategoryFacet",
+            "BoolFacet": "Response.BoolFacet",
+            "RangeFacet": "Response.RangeFacet"
+          }
+        }
+      },
+      "Response.NumberFacet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FacetBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "refinements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.NumberRefinement"
+            }
+          }
+        },
+        "x-ms-discriminator-value": "NumberFacet"
+      },
+      "Response.StringFacet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FacetBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "refinements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.StringRefinement"
+            }
+          }
+        },
+        "x-ms-discriminator-value": "StringFacet"
+      },
+      "Response.CategoryFacet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FacetBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "refinements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.CategoryRefinement"
+            }
+          }
+        },
+        "x-ms-discriminator-value": "CategoryFacet"
+      },
+      "Response.BoolFacet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FacetBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "refinements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.BoolRefinement"
+            }
+          }
+        },
+        "x-ms-discriminator-value": "BoolFacet"
+      },
+      "Response.RangeFacet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FacetBase"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "refinements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.RangeRefinement"
+            }
+          }
+        },
+        "x-ms-discriminator-value": "RangeFacet"
+      },
+      "Response.Min": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FieldAggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "Min"
+      },
+      "Response.Max": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response.FieldAggregationBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        ],
+        "x-ms-discriminator-value": "Max"
+      }
+    },
+    "securitySchemes": {
+      "AppId": {
+        "type": "apiKey",
+        "name": "appid",
+        "in": "query"
+      },
+      "PortalBearerToken": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "AppId": [ ]
+    },
+    {
+      "PortalBearerToken": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "RetailSearchService"
+    }
+  ]
+}

@@ -1,0 +1,1340 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Bing ECommerce Ingestion",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://www.bingapis.com/api/v1"
+    }
+  ],
+  "paths": {
+    "/retail/ingestion/{tenantid}/indexes": {
+      "post": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "CreateIndex",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Index"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "GetAllIndexes",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/{tenantid}/indexes/{indexid}": {
+      "delete": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "DeleteIndex",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "UpdateIndex",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Index"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "GetIndex",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "indexid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/{tenantid}/indexes/{indexid}/status": {
+      "get": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "GetIndexStatus",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "indexid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/{tenantid}/indexes/{indexid}/pushdata": {
+      "post": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "PushDataUpdate",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "notransform",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "updateid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PushDataUpdateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "indexid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/{tenantid}/indexes/{indexid}/status/{updateid}": {
+      "get": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "PushDataStatus",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PushUpdateStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "indexid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "updateid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/{tenantid}/indexes/{indexid}/transformationconfig": {
+      "delete": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "DeleteTransformationConfig",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "CreateOrUpdateTransformationConfig",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "GetTransformationConfig",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "indexid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/transformation/tryout": {
+      "post": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "UploadTryOutConfig",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/retail/ingestion/transformation/tryout/{tryoutid}": {
+      "post": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "ExecuteTryOutConfig",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationTryoutResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tryoutid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/retail/ingestion/schemadetection": {
+      "post": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "operationId": "DetectSchema",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "Unknown",
+                "LDJson",
+                "CSV",
+                "TSV",
+                "JsonArray"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemaDetectionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Response.PushStatus": {
+        "enum": [
+          "Queued",
+          "Error"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Response.PushStatus",
+          "values": [
+            {
+              "value": "Queued"
+            },
+            {
+              "value": "Error"
+            }
+          ]
+        }
+      },
+      "Index": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "regions": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Region"
+            }
+          },
+          "searchScenario": {
+            "enum": [
+              "Unknown",
+              "Retail",
+              "Document",
+              "Hotel"
+            ],
+            "type": "string",
+            "default": "Retail"
+          },
+          "searchServices": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "Unknown",
+                "VisualSearch",
+                "Autosuggest",
+                "TextSearch"
+              ],
+              "type": "string"
+            }
+          },
+          "schemaVersion": {
+            "type": "string"
+          },
+          "fields": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndexField"
+            }
+          }
+        }
+      },
+      "IndexField": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/IndexFieldType"
+          },
+          "facetable": {
+            "type": "boolean"
+          },
+          "filterable": {
+            "type": "boolean"
+          },
+          "retrievable": {
+            "type": "boolean"
+          },
+          "searchable": {
+            "type": "boolean"
+          },
+          "sortable": {
+            "type": "boolean"
+          },
+          "fieldLabel": {
+            "type": "string"
+          },
+          "fields": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndexField"
+            }
+          }
+        }
+      },
+      "Response.Index": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Index"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "provisioningState": {
+                "enum": [
+                  "Unknown",
+                  "NotStarted",
+                  "Provisioning",
+                  "Deprovisioning",
+                  "Succeeded",
+                  "Failed"
+                ],
+                "type": "string"
+              },
+              "createdDateTime": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "IndexFieldType": {
+        "enum": [
+          "Unknown",
+          "String",
+          "Boolean",
+          "Number",
+          "ProductId",
+          "DupId",
+          "StaticRank",
+          "Url",
+          "ImageUrl",
+          "Title",
+          "Description",
+          "Category",
+          "Price",
+          "Rating",
+          "Brand",
+          "Model",
+          "Color",
+          "Size",
+          "Material",
+          "Gender",
+          "AgeGroup",
+          "Array",
+          "Dictionary",
+          "ExcludeFlag",
+          "Identifier",
+          "Object",
+          "DocumentId",
+          "Author",
+          "CreatedAt",
+          "ModifiedAt",
+          "Paragraph",
+          "SubHeading",
+          "SectionHeader",
+          "Address",
+          "RatingCount",
+          "ReviewCount",
+          "RatingScale",
+          "Amenities",
+          "StreetAddress",
+          "Locality",
+          "SubRegion",
+          "AddressRegion",
+          "PostalCode",
+          "PostOfficeBoxNumber",
+          "Country",
+          "CountryIso",
+          "Neighborhood",
+          "OtherAreas",
+          "PhoneNumber",
+          "Barcode"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "IndexFieldType",
+          "values": [
+            {
+              "value": "Unknown"
+            },
+            {
+              "value": "String"
+            },
+            {
+              "value": "Boolean"
+            },
+            {
+              "value": "Number"
+            },
+            {
+              "value": "ProductId"
+            },
+            {
+              "value": "DupId"
+            },
+            {
+              "value": "StaticRank"
+            },
+            {
+              "value": "Url"
+            },
+            {
+              "value": "ImageUrl"
+            },
+            {
+              "value": "Title"
+            },
+            {
+              "value": "Description"
+            },
+            {
+              "value": "Category"
+            },
+            {
+              "value": "Price"
+            },
+            {
+              "value": "Rating"
+            },
+            {
+              "value": "Brand"
+            },
+            {
+              "value": "Model"
+            },
+            {
+              "value": "Color"
+            },
+            {
+              "value": "Size"
+            },
+            {
+              "value": "Material"
+            },
+            {
+              "value": "Gender"
+            },
+            {
+              "value": "AgeGroup"
+            },
+            {
+              "value": "Array"
+            },
+            {
+              "value": "Dictionary"
+            },
+            {
+              "value": "ExcludeFlag"
+            },
+            {
+              "value": "Identifier"
+            },
+            {
+              "value": "Object"
+            },
+            {
+              "value": "DocumentId"
+            },
+            {
+              "value": "Author"
+            },
+            {
+              "value": "CreatedAt"
+            },
+            {
+              "value": "ModifiedAt"
+            },
+            {
+              "value": "Paragraph"
+            },
+            {
+              "value": "SubHeading"
+            },
+            {
+              "value": "SectionHeader"
+            },
+            {
+              "value": "Address"
+            },
+            {
+              "value": "RatingCount"
+            },
+            {
+              "value": "ReviewCount"
+            },
+            {
+              "value": "RatingScale"
+            },
+            {
+              "value": "Amenities"
+            },
+            {
+              "value": "StreetAddress"
+            },
+            {
+              "value": "Locality"
+            },
+            {
+              "value": "SubRegion"
+            },
+            {
+              "value": "AddressRegion"
+            },
+            {
+              "value": "PostalCode"
+            },
+            {
+              "value": "PostOfficeBoxNumber"
+            },
+            {
+              "value": "Country"
+            },
+            {
+              "value": "CountryIso"
+            },
+            {
+              "value": "Neighborhood"
+            },
+            {
+              "value": "OtherAreas"
+            },
+            {
+              "value": "PhoneNumber"
+            },
+            {
+              "value": "Barcode"
+            }
+          ]
+        }
+      },
+      "Region": {
+        "enum": [
+          "Unknown",
+          "EastAsia",
+          "EastUS2",
+          "NorthCentralUS",
+          "NorthEurope",
+          "WestUS2",
+          "SoutheastAsia",
+          "AustraliaEast",
+          "AustraliaSoutheast",
+          "AustraliaCentral",
+          "AustraliaCentral2",
+          "BrazilSouth",
+          "CanadaCentral",
+          "CanadaEast",
+          "ChinaNorth",
+          "ChinaEast",
+          "ChinaNorth2",
+          "ChinaEast2",
+          "WestEurope",
+          "FranceCentral",
+          "FranceSouth",
+          "GermanyCentral",
+          "GermanyNortheast",
+          "CentralIndia",
+          "WestIndia",
+          "SouthIndia",
+          "JapanEast",
+          "JapanWest",
+          "KoreaCentral",
+          "KoreaSouth",
+          "EastUS",
+          "WestUS",
+          "CentralUS",
+          "SouthCentralUS",
+          "WestCentralUS",
+          "SouthAfricaNorth",
+          "SouthAfricaWest",
+          "UKWest",
+          "UKSouth",
+          "UAENorth",
+          "UAECentral"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Region",
+          "values": [
+            {
+              "value": "Unknown"
+            },
+            {
+              "value": "EastAsia"
+            },
+            {
+              "value": "EastUS2"
+            },
+            {
+              "value": "NorthCentralUS"
+            },
+            {
+              "value": "NorthEurope"
+            },
+            {
+              "value": "WestUS2"
+            },
+            {
+              "value": "SoutheastAsia"
+            },
+            {
+              "value": "AustraliaEast"
+            },
+            {
+              "value": "AustraliaSoutheast"
+            },
+            {
+              "value": "AustraliaCentral"
+            },
+            {
+              "value": "AustraliaCentral2"
+            },
+            {
+              "value": "BrazilSouth"
+            },
+            {
+              "value": "CanadaCentral"
+            },
+            {
+              "value": "CanadaEast"
+            },
+            {
+              "value": "ChinaNorth"
+            },
+            {
+              "value": "ChinaEast"
+            },
+            {
+              "value": "ChinaNorth2"
+            },
+            {
+              "value": "ChinaEast2"
+            },
+            {
+              "value": "WestEurope"
+            },
+            {
+              "value": "FranceCentral"
+            },
+            {
+              "value": "FranceSouth"
+            },
+            {
+              "value": "GermanyCentral"
+            },
+            {
+              "value": "GermanyNortheast"
+            },
+            {
+              "value": "CentralIndia"
+            },
+            {
+              "value": "WestIndia"
+            },
+            {
+              "value": "SouthIndia"
+            },
+            {
+              "value": "JapanEast"
+            },
+            {
+              "value": "JapanWest"
+            },
+            {
+              "value": "KoreaCentral"
+            },
+            {
+              "value": "KoreaSouth"
+            },
+            {
+              "value": "EastUS"
+            },
+            {
+              "value": "WestUS"
+            },
+            {
+              "value": "CentralUS"
+            },
+            {
+              "value": "SouthCentralUS"
+            },
+            {
+              "value": "WestCentralUS"
+            },
+            {
+              "value": "SouthAfricaNorth"
+            },
+            {
+              "value": "SouthAfricaWest"
+            },
+            {
+              "value": "UKWest"
+            },
+            {
+              "value": "UKSouth"
+            },
+            {
+              "value": "UAENorth"
+            },
+            {
+              "value": "UAECentral"
+            }
+          ]
+        }
+      },
+      "IndexResponse": {
+        "type": "object",
+        "properties": {
+          "indexes": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.Index"
+            }
+          }
+        }
+      },
+      "IndexStatusResponse": {
+        "type": "object",
+        "properties": {
+          "indexStatuses": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.IndexStatus"
+            }
+          }
+        }
+      },
+      "Response.IndexStatus": {
+        "type": "object",
+        "properties": {
+          "region": {
+            "$ref": "#/components/schemas/Region"
+          },
+          "provisioningState": {
+            "enum": [
+              "Unknown",
+              "NotStarted",
+              "Provisioning",
+              "Deprovisioning",
+              "Succeeded",
+              "Failed"
+            ],
+            "type": "string"
+          },
+          "provisioningPercentage": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "PushDataUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "statuses": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.PushDataUpdateStatus"
+            }
+          },
+          "updateId": {
+            "type": "string"
+          }
+        }
+      },
+      "Response.PushDataUpdateStatus": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Response.PushStatus"
+          },
+          "errorMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "PushUpdateStatusResponse": {
+        "type": "object",
+        "properties": {
+          "updateId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "InProgress",
+              "Succeeded",
+              "PartiallySucceeded",
+              "Failed"
+            ],
+            "type": "string"
+          },
+          "totalKeys": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "successfulKeys": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failureMessages": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "records": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.RecordStatus"
+            }
+          }
+        }
+      },
+      "Response.RecordStatus": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "InProgress",
+              "Succeeded",
+              "PartiallySucceeded",
+              "Failed"
+            ],
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "TransformationConfigResponse": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "tryOutId": {
+            "type": "string"
+          }
+        }
+      },
+      "TransformationTryoutResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "results": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "consoleOutput": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SchemaDetectionResponse": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "$ref": "#/components/schemas/Response.Index"
+          },
+          "transformationConfig": {
+            "$ref": "#/components/schemas/TransformationConfigResponse"
+          },
+          "warnings": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AppId": {
+        "type": "apiKey",
+        "name": "appid",
+        "in": "query"
+      },
+      "PortalBearerToken": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "AppId": [ ]
+    },
+    {
+      "PortalBearerToken": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "RetailSearchIngestionService"
+    }
+  ]
+}
