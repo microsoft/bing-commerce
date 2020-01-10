@@ -1,31 +1,35 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Bing ECommerce Ingestion",
+    "title": "Bing Commerce Ingestion",
     "version": "1"
   },
   "servers": [
     {
-      "url": "https://www.bingapis.com/api/v1"
+      "url": "https://commerce.bing.com/api/ingestion/v1"
     }
   ],
   "paths": {
-    "/retail/ingestion/{tenantid}/indexes": {
+    "/{tenantid}/indexes": {
       "post": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Create an index.",
+        "description": "Creates a definition of the tenant's index.",
         "operationId": "CreateIndex",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
           }
         ],
         "requestBody": {
+          "description": "An Index object that describes the index definition to add.",
           "content": {
             "application/json": {
               "schema": {
@@ -51,11 +55,14 @@
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Get list of index definitions.",
+        "description": "Get list of index definitions that you defined for a tenant.",
         "operationId": "GetAllIndexes",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -78,6 +85,7 @@
         {
           "name": "tenantid",
           "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
           "required": true,
           "schema": {
             "type": "string"
@@ -85,16 +93,19 @@
         }
       ]
     },
-    "/retail/ingestion/{tenantid}/indexes/{indexid}": {
+    "/{tenantid}/indexes/{indexid}": {
       "delete": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Delete an index.",
+        "description": "Delete an index definition along with all the catalog.",
         "operationId": "DeleteIndex",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -117,17 +128,21 @@
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Updates an index with id.",
+        "description": "Update the definition for your index.",
         "operationId": "UpdateIndex",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
           }
         ],
         "requestBody": {
+          "description": "The ID that uniquely identifies the index definition to manage.",
           "content": {
             "application/json": {
               "schema": {
@@ -153,11 +168,14 @@
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Get index definition by id.",
+        "description": "Get a specific index definition for a tenant.",
         "operationId": "GetIndex",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -180,6 +198,7 @@
         {
           "name": "tenantid",
           "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
           "required": true,
           "schema": {
             "type": "string"
@@ -188,6 +207,7 @@
         {
           "name": "indexid",
           "in": "path",
+          "description": "The ID that uniquely identifies the index definition to manage.",
           "required": true,
           "schema": {
             "type": "string"
@@ -195,16 +215,101 @@
         }
       ]
     },
-    "/retail/ingestion/{tenantid}/indexes/{indexid}/status": {
+    "/{tenantid}/indexes/{indexid}/deletedata": {
+      "post": {
+        "tags": [
+          "RetailSearchIngestionService"
+        ],
+        "summary": "Delete documents from your catalog.",
+        "description": "Delete documents from your index's catalog.",
+        "operationId": "DeleteDocuments",
+        "parameters": [
+          {
+            "name": "SubscriptionId",
+            "in": "header",
+            "description": "Bing developer subcription id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The set of document ids to delete.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requests.StringSet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succeeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteDocumentsResponse"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "PartiallySucceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteDocumentsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteDocumentsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "tenantid",
+          "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "indexid",
+          "in": "path",
+          "description": "The ID that uniquely identifies the index definition to manage.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/{tenantid}/indexes/{indexid}/status": {
       "get": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Get index status by id.",
+        "description": "Get the detailed status of your index in each supported region.",
         "operationId": "GetIndexStatus",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -227,6 +332,7 @@
         {
           "name": "tenantid",
           "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
           "required": true,
           "schema": {
             "type": "string"
@@ -235,6 +341,7 @@
         {
           "name": "indexid",
           "in": "path",
+          "description": "The ID that uniquely identifies the index definition to manage.",
           "required": true,
           "schema": {
             "type": "string"
@@ -242,16 +349,19 @@
         }
       ]
     },
-    "/retail/ingestion/{tenantid}/indexes/{indexid}/pushdata": {
+    "/{tenantid}/indexes/{indexid}/pushdata": {
       "post": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Push catalog data.",
+        "description": "This method pushes updates to your your index data to Bing. This is an asynchronous process. To upload your index data to Bing, you'll send a push request that contains your index data.",
         "operationId": "PushDataUpdate",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -259,6 +369,7 @@
           {
             "name": "notransform",
             "in": "query",
+            "description": "This disables transformation config processing if the config was uploaded for some index. It's useful when the data is already transformed and is matching the index definition. Default is `false`",
             "schema": {
               "type": "boolean"
             }
@@ -266,6 +377,7 @@
           {
             "name": "updateid",
             "in": "query",
+            "description": "An id to uniquely identify the push update request in order to be able to track it down later.",
             "schema": {
               "type": "string"
             }
@@ -298,6 +410,7 @@
         {
           "name": "tenantid",
           "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
           "required": true,
           "schema": {
             "type": "string"
@@ -306,6 +419,7 @@
         {
           "name": "indexid",
           "in": "path",
+          "description": "The ID that uniquely identifies the index definition to manage.",
           "required": true,
           "schema": {
             "type": "string"
@@ -313,16 +427,19 @@
         }
       ]
     },
-    "/retail/ingestion/{tenantid}/indexes/{indexid}/status/{updateid}": {
+    "/{tenantid}/indexes/{indexid}/status/{updateid}": {
       "get": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": ".",
+        "description": ".",
         "operationId": "PushDataStatus",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -345,6 +462,7 @@
         {
           "name": "tenantid",
           "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
           "required": true,
           "schema": {
             "type": "string"
@@ -353,6 +471,7 @@
         {
           "name": "indexid",
           "in": "path",
+          "description": "The ID that uniquely identifies the index definition to manage.",
           "required": true,
           "schema": {
             "type": "string"
@@ -361,6 +480,7 @@
         {
           "name": "updateid",
           "in": "path",
+          "description": "An id to uniquely identify the push update request in order to be able to track it down later.",
           "required": true,
           "schema": {
             "type": "string"
@@ -368,16 +488,19 @@
         }
       ]
     },
-    "/retail/ingestion/{tenantid}/indexes/{indexid}/transformationconfig": {
+    "/{tenantid}/indexes/{indexid}/transformation": {
       "delete": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Delete your index's transformation config.",
+        "description": "Delete the transformation config that currently aplies to data you push to your index.",
         "operationId": "DeleteTransformationConfig",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -400,11 +523,14 @@
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Retrieve your current index's transformation config.",
+        "description": "Retrieve the transformation config that currently applies to data you push to your index.",
         "operationId": "CreateOrUpdateTransformationConfig",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -437,11 +563,14 @@
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Get ingestion status.",
+        "description": "Track your ingestion by querying the status.",
         "operationId": "GetTransformationConfig",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -464,6 +593,7 @@
         {
           "name": "tenantid",
           "in": "path",
+          "description": "The ID that uniquely identifies the tenant that the index belongs to.",
           "required": true,
           "schema": {
             "type": "string"
@@ -472,6 +602,7 @@
         {
           "name": "indexid",
           "in": "path",
+          "description": "The ID that uniquely identifies the index definition to manage.",
           "required": true,
           "schema": {
             "type": "string"
@@ -479,16 +610,19 @@
         }
       ]
     },
-    "/retail/ingestion/transformation/tryout": {
+    "/transformation/tryout": {
       "post": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Create a transformation config.",
+        "description": "Upload a new transformation config and set it as the transformation config that applies to data you push to your index.",
         "operationId": "UploadTryOutConfig",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -518,21 +652,34 @@
         }
       }
     },
-    "/retail/ingestion/transformation/tryout/{tryoutid}": {
+    "/transformation/tryout/{tryoutid}": {
       "post": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "Upload a trytout config.",
+        "description": "Upload a transformation config that you can use to test data transformation on the cloud.",
         "operationId": "ExecuteTryOutConfig",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Ok",
@@ -550,6 +697,7 @@
         {
           "name": "tryoutid",
           "in": "path",
+          "description": "The transformation tryout config id.",
           "required": true,
           "schema": {
             "type": "string"
@@ -557,16 +705,19 @@
         }
       ]
     },
-    "/retail/ingestion/schemadetection": {
+    "/schemadetection": {
       "post": {
         "tags": [
           "RetailSearchIngestionService"
         ],
+        "summary": "",
+        "description": "",
         "operationId": "DetectSchema",
         "parameters": [
           {
             "name": "SubscriptionId",
             "in": "header",
+            "description": "Bing developer subcription id",
             "schema": {
               "type": "string"
             }
@@ -574,6 +725,7 @@
           {
             "name": "format",
             "in": "query",
+            "description": "The push data update document format.",
             "schema": {
               "enum": [
                 "Unknown",
@@ -621,21 +773,38 @@
           ]
         }
       },
+      "Requests.StringSet": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A set of strings"
+          }
+        },
+        "description": "Defines a set of strings"
+      },
       "Index": {
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "The index's name. The name must be unique per tenant, contain only ASCII characters, and have a maximum length of 64 characters."
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "A description of the index. The description is for the tenant's use. The description must contain only ASCII characters and have a maximum length of 64 characters."
           },
           "regions": {
             "uniqueItems": true,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Region"
-            }
+            },
+            "description": "The array of regions where the customer data will be processed and served."
           },
           "searchScenario": {
             "enum": [
@@ -645,6 +814,7 @@
               "Hotel"
             ],
             "type": "string",
+            "description": "The type of search scenario that the user is using the index for, which includes Retail, Hotel, and Document.",
             "default": "Retail"
           },
           "searchServices": {
@@ -658,55 +828,68 @@
                 "TextSearch"
               ],
               "type": "string"
-            }
+            },
+            "description": "The array of additional search services that the user wants to include for the index, which includes Autosuggest and VisualSearch."
           },
           "schemaVersion": {
-            "type": "string"
+            "type": "string",
+            "description": "The version for the schema of the index."
           },
           "fields": {
             "uniqueItems": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IndexField"
-            }
+            },
+            "description": "The fields that are associated with the index."
           }
-        }
+        },
+        "description": "Contains the definition for the index. An index consists of a set of documents that search operations can be performed upon."
       },
       "IndexField": {
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Index field name."
           },
           "type": {
             "$ref": "#/components/schemas/IndexFieldType"
           },
           "facetable": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enables using the field for facets and other field-based aggregations."
           },
           "filterable": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enables using the field in filter and boost conditions."
           },
           "retrievable": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enables using the field values in search response."
           },
           "searchable": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enables text matching on the field."
           },
           "sortable": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enables sorting results by the field."
           },
           "fieldLabel": {
-            "type": "string"
+            "type": "string",
+            "description": "A label to use with the field."
           },
           "fields": {
             "uniqueItems": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IndexField"
-            }
+            },
+            "description": "A child list of fields."
           }
-        }
+        },
+        "description": "Contains the definition for the index field. A field represents a single unit of data."
       },
       "Response.Index": {
         "allOf": [
@@ -717,7 +900,8 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "string"
+                "type": "string",
+                "description": "The ID that uniquely identifies the index definition that had the CRUD operation applied."
               },
               "provisioningState": {
                 "enum": [
@@ -728,10 +912,12 @@
                   "Succeeded",
                   "Failed"
                 ],
-                "type": "string"
+                "type": "string",
+                "description": "The current state of provisioning for the index definition."
               },
               "createdDateTime": {
-                "type": "string"
+                "type": "string",
+                "description": "The date and time when the index was created."
               }
             }
           }
@@ -788,7 +974,8 @@
           "Neighborhood",
           "OtherAreas",
           "PhoneNumber",
-          "Barcode"
+          "Barcode",
+          "SecondaryImageUrls"
         ],
         "type": "string",
         "x-ms-enum": {
@@ -943,6 +1130,9 @@
             },
             {
               "value": "Barcode"
+            },
+            {
+              "value": "SecondaryImageUrls"
             }
           ]
         }
@@ -1129,9 +1319,56 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Response.Index"
-            }
+            },
+            "description": "A list of indexes"
           }
-        }
+        },
+        "description": "A response containing a list of indexes."
+      },
+      "DeleteDocumentsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "Succeeded",
+              "PartiallySucceeded",
+              "Failed"
+            ],
+            "type": "string",
+            "description": "The status for the document deletion request."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "An aggregation of error messages for errors that happened while processing the request, if any."
+          },
+          "result": {
+            "uniqueItems": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Response.DocumentDeletionResult"
+            },
+            "description": "A list of status results per document."
+          }
+        },
+        "description": "A response containing the status for a request to delete documents from the index."
+      },
+      "Response.DocumentDeletionResult": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "description": "The _itemid for the item item that has been deleted from the index."
+          },
+          "deleted": {
+            "type": "boolean",
+            "description": "A boolean flag that specifies whether or not the document has been successfully deleted."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "An error message for the request, if any."
+          }
+        },
+        "description": "A response representing the result of a request to delete a document from your index's catalog"
       },
       "IndexStatusResponse": {
         "type": "object",
@@ -1141,9 +1378,11 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Response.IndexStatus"
-            }
+            },
+            "description": "A list of objects containing the status of the index within a region."
           }
-        }
+        },
+        "description": "A response that represents the status of an index within its supported regions."
       },
       "Response.IndexStatus": {
         "type": "object",
@@ -1160,48 +1399,33 @@
               "Succeeded",
               "Failed"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "The provisioning state for the index within the specified region."
           },
           "provisioningPercentage": {
             "type": "number",
+            "description": "The percentage of provisioning for the index withing the region.",
             "format": "double"
           }
-        }
+        },
+        "description": "A response that represents a query to an index status within a region."
       },
       "PushDataUpdateResponse": {
         "type": "object",
         "properties": {
-          "statuses": {
-            "uniqueItems": false,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Response.PushDataUpdateStatus"
-            }
-          },
           "updateId": {
-            "type": "string"
+            "type": "string",
+            "description": "The id of the push data update that you can use to track it down."
           }
-        }
-      },
-      "Response.PushDataUpdateStatus": {
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/Response.PushStatus"
-          },
-          "errorMessage": {
-            "type": "string"
-          }
-        }
+        },
+        "description": "A response to a push data update."
       },
       "PushUpdateStatusResponse": {
         "type": "object",
         "properties": {
           "updateId": {
-            "type": "string"
+            "type": "string",
+            "description": "The id that uniquely identifies the push data update."
           },
           "status": {
             "enum": [
@@ -1210,14 +1434,17 @@
               "PartiallySucceeded",
               "Failed"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "The wholistic update status for the push data update."
           },
           "totalKeys": {
             "type": "integer",
+            "description": "The total number of items that are part of the upate.",
             "format": "int32"
           },
           "successfulKeys": {
             "type": "integer",
+            "description": "The total number of items that have successfully been updated.",
             "format": "int32"
           },
           "failureMessages": {
@@ -1225,22 +1452,26 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "An aggregation of any error messages that happened while ingesting any of the records."
           },
           "records": {
             "uniqueItems": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Response.RecordStatus"
-            }
+            },
+            "description": "A drill down for the push update status for each record."
           }
-        }
+        },
+        "description": "A response that represents the status of a push data update given an update id."
       },
       "Response.RecordStatus": {
         "type": "object",
         "properties": {
           "recordId": {
-            "type": "string"
+            "type": "string",
+            "description": "The _itemid for the record being updated."
           },
           "status": {
             "enum": [
@@ -1249,21 +1480,26 @@
               "PartiallySucceeded",
               "Failed"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "The status for the push data update regarding the specified item id"
           },
           "errorMessage": {
-            "type": "string"
+            "type": "string",
+            "description": "An optional error message in case of an error while ingesting the record."
           }
-        }
+        },
+        "description": "A response that represents a status to a push data update for a record."
       },
       "TransformationConfigResponse": {
         "type": "object",
         "properties": {
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "The contents of the transformation config that's being managed."
           },
           "tryOutId": {
-            "type": "string"
+            "type": "string",
+            "description": "An id that you can use to tryout your transformation on the cloud."
           }
         }
       },
@@ -1271,26 +1507,31 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "The status of the transformation config tryout."
           },
           "errorMessage": {
-            "type": "string"
+            "type": "string",
+            "description": "Any error messages that happened while transforming, if any."
           },
           "results": {
             "uniqueItems": false,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "A list of records that the transformation config outputed."
           },
           "consoleOutput": {
             "uniqueItems": false,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "The console output of the transformation config, if any. Can be useful for debugging."
           }
-        }
+        },
+        "description": "A response representing the status of a transformation config tryout requset."
       },
       "SchemaDetectionResponse": {
         "type": "object",
