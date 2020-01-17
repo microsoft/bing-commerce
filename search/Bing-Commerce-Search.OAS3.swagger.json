@@ -52,7 +52,7 @@
           {
             "name": "mkt",
             "in": "query",
-            "description": "The market where the results come from. Thypically, `mkt` is the country where the user is making the request from.",
+            "description": "The market where the results come from. Typically, `mkt` is the country where the user is making the request from.",
             "schema": {
               "type": "string"
             }
@@ -184,7 +184,7 @@
         "properties": {
           "market": {
             "type": "string",
-            "description": "The market where the results come from. Thypically, `mkt` is the country where the user is making the request from."
+            "description": "The market where the results come from. Typically, `mkt` is the country where the user is making the request from."
           },
           "client": {
             "$ref": "#/components/schemas/Request.Client"
