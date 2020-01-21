@@ -7,9 +7,9 @@ For more details about the proejct, please refer to the [Bing for Commerce API D
 
 # Generating The Libraries
  Although you can totally use the swagger specs as a guide to manually call our services, it would be a lot easier if you tried using a tool like [AutoRest](https://github.com/Azure/AutoRest) or [Swagger Codegen](https://swagger.io/tools/swagger-codegen/) to generate a library that you can use with the language of your choice. To take some burden off your shoulders, and to make it easier to write your applications, we have already genrated the libraries for:
-* [dotnet](https://github.com/microsoft/bing-ecommerce-sdk-for-net).
-* [Java](https://github.com/microsoft/bing-ecommerce-sdk-for-java).
-* [Python](https://github.com/microsoft/bing-ecommerce-sdk-for-python).
+* [dotnet](https://github.com/microsoft/bing-commerce-sdk-for-net).
+* [Java](https://github.com/microsoft/bing-commerce-sdk-for-java).
+* [Python](https://github.com/microsoft/bing-commerce-sdk-for-python).
 
 # Authentication
 Bing for Commerce APIs use Bearer Tokens for authentication. You can use the [Bing for Commerce Portal Documentation](https://commerce.bing.com/docs/Portal%20Documentation/#manage-keys-and-tokens) for help creating one.
