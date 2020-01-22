@@ -13,7 +13,7 @@
     "/{tenantid}/indexes": {
       "post": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Create an index.",
         "description": "Creates a definition of the tenant's index.",
@@ -53,7 +53,7 @@
       },
       "get": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Get list of index definitions.",
         "description": "Get list of index definitions that you defined for a tenant.",
@@ -96,7 +96,7 @@
     "/{tenantid}/indexes/{indexid}": {
       "delete": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Delete an index.",
         "description": "Delete an index definition along with all the catalog.",
@@ -126,7 +126,7 @@
       },
       "put": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Updates an index with id.",
         "description": "Update the definition for your index.",
@@ -166,7 +166,7 @@
       },
       "get": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Get index definition by id.",
         "description": "Get a specific index definition for a tenant.",
@@ -218,7 +218,7 @@
     "/{tenantid}/indexes/{indexid}/deletedata": {
       "post": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Delete documents from your catalog.",
         "description": "Delete documents from your index's catalog.",
@@ -300,7 +300,7 @@
     "/{tenantid}/indexes/{indexid}/status": {
       "get": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Get index status by id.",
         "description": "Get the detailed status of your index in each supported region.",
@@ -352,7 +352,7 @@
     "/{tenantid}/indexes/{indexid}/pushdata": {
       "post": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Push catalog data.",
         "description": "This method pushes updates to your your index data to Bing. This is an asynchronous process. To upload your index data to Bing, you'll send a push request that contains your index data.",
@@ -430,7 +430,7 @@
     "/{tenantid}/indexes/{indexid}/status/{updateid}": {
       "get": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": ".",
         "description": ".",
@@ -491,7 +491,7 @@
     "/{tenantid}/indexes/{indexid}/transformation": {
       "delete": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Delete your index's transformation config.",
         "description": "Delete the transformation config that currently aplies to data you push to your index.",
@@ -521,7 +521,7 @@
       },
       "put": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Retrieve your current index's transformation config.",
         "description": "Retrieve the transformation config that currently applies to data you push to your index.",
@@ -561,7 +561,7 @@
       },
       "get": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Get ingestion status.",
         "description": "Track your ingestion by querying the status.",
@@ -613,7 +613,7 @@
     "/transformation/tryout": {
       "post": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Create a transformation config.",
         "description": "Upload a new transformation config and set it as the transformation config that applies to data you push to your index.",
@@ -655,7 +655,7 @@
     "/transformation/tryout/{tryoutid}": {
       "post": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "Upload a trytout config.",
         "description": "Upload a transformation config that you can use to test data transformation on the cloud.",
@@ -708,7 +708,7 @@
     "/schemadetection": {
       "post": {
         "tags": [
-          "RetailSearchIngestionService"
+          "CommerceSearchIngestionService"
         ],
         "summary": "",
         "description": "",
@@ -1575,7 +1575,7 @@
   ],
   "tags": [
     {
-      "name": "RetailSearchIngestionService"
+      "name": "CommerceSearchIngestionService"
     }
   ]
 }
